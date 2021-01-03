@@ -20,7 +20,7 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 ArchitecturesInstallIn64BitMode=x64
-AppId={{2F2FE525-3BFD-4F63-8645-1CDA40F73EFB}}
+AppId={{639F1D5A-3E8E-47B2-8DCF-0E042E72AC6D}}
 AppName={#ApplicationName}
 AppVerName={#ApplicationName} {#ApplicationVersion}
 AppPublisher={#ApplicationPublisher}
