@@ -189,6 +189,7 @@ HEADERS += \
         Golay24128.h \
         SHA256.h \
         YSFConvolution.h \
+        YSFDefines.h \
         YSFFICH.h \
         ambe.h \
         ambe3600x2400_const.h \
