@@ -36,6 +36,7 @@
 
 #ifdef Q_OS_RPI
     #include <pigpio.h>
+    #define PTT_PIN 18
 #endif
 
 #define LOBYTE(w)			((uint8_t)(uint16_t)(w & 0x00FF))
@@ -258,9 +259,9 @@ void DudeShield::init_gui()
             qDebug() << "pigpio initialised ok";
         }
 
-        gpioSetMode(5, PI_INPUT);
-        gpioSetPullUpDown(5, PI_PUD_OFF);
-        gpioSetAlertFuncEx(5, _callbackGPIOExt, (void *)this);
+        gpioSetMode(PTT_PIN, PI_INPUT);
+        gpioSetPullUpDown(PTT_PIN, PI_PUD_OFF);
+        gpioSetAlertFuncEx(PTT_PIN, _callbackGPIOExt, (void *)this);
 #endif
     m_uitimer = new QTimer();
     connect(m_uitimer, SIGNAL(timeout()), this, SLOT(update_ui()));
