@@ -64,6 +64,7 @@ signals:
 private:
     void init_gui();
 #ifdef Q_OS_RPI
+    void init_gpio(bool pFlag);
     void _callbackGPIO(int gpio,int level, uint32_t tick);
 static void _callbackGPIOExt(int gpio,int level, uint32_t tick, void* user);
 #endif
@@ -145,7 +146,12 @@ static void _callbackGPIOExt(int gpio,int level, uint32_t tick, void* user);
     CLogger* m_log;
     QSettings m_settings;
     int m_maxLine;
-
+#ifdef Q_OS_RPI
+    int m_PTT_PIN;
+    int m_TX_LED_PIN;
+    int m_RX_LED_PIN;
+    bool m_GPIO_ON
+#endif
 protected:
     void    keyPressEvent(QKeyEvent* event);
     void    keyReleaseEvent(QKeyEvent* event);

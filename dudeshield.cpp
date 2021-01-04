@@ -36,7 +36,6 @@
 
 #ifdef Q_OS_RPI
     #include <pigpio.h>
-    #define PTT_PIN 18
 #endif
 
 #define LOBYTE(w)			((uint8_t)(uint16_t)(w & 0x00FF))
@@ -250,18 +249,12 @@ void DudeShield::init_gui()
                               "General Public License along with this program. "
                               "If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a></p>").arg(APP_NAME).arg(APP_MAJOR).arg(APP_MINOR).arg(APP_BUILD));
 #ifdef Q_OS_RPI
-    if (gpioInitialise() < 0)
-        {
-            qDebug() << "pigpio initialisation failed";
-        }
-        else
-        {
-            qDebug() << "pigpio initialised ok";
-        }
-
-        gpioSetMode(PTT_PIN, PI_INPUT);
-        gpioSetPullUpDown(PTT_PIN, PI_PUD_OFF);
-        gpioSetAlertFuncEx(PTT_PIN, _callbackGPIOExt, (void *)this);
+    m_settings.beginGroup("gpio");
+    m_GPIO_ON = m_settings.value("GPIO_ON",true).toBool();
+    m_PTT_PIN = m_settings.value("PTT_PIN",18).toInt();
+    m_TX_LED_PIN = m_settings.value("TX_LED_PIN",19).toInt();
+    m_RX_LED_PIN = m_settings.value("RX_LED_PIN",20).toInt();
+    m_settings.endGroup();
 #endif
     m_uitimer = new QTimer();
     connect(m_uitimer, SIGNAL(timeout()), this, SLOT(update_ui()));
@@ -1238,6 +1231,9 @@ void DudeShield::process_connect()
         if((m_protocol == "DCS") || (m_protocol == "XRF") || (m_protocol == "M17")){
             ui->comboModule->setEnabled(true);
         }
+#ifdef Q_OS_RPI
+        init_gpio (false);
+#endif
     }
     else if( (connect_status == DISCONNECTED) &&
                  (ui->comboHost->currentText().size() == 0) &&
@@ -1282,8 +1278,11 @@ void DudeShield::process_connect()
             connect(ui->editRPTR2, SIGNAL(textChanged(QString)), m_ref, SLOT(rptr2_changed(QString)));
             connect(ui->checkSWRX, SIGNAL(stateChanged(int)), m_ref, SLOT(swrx_state_changed(int)));
             connect(ui->checkSWTX, SIGNAL(stateChanged(int)), m_ref, SLOT(swtx_state_changed(int)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_ref, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_ref, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_ref, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_ref, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_ref, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_ref, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_ref, SLOT(decoder_gain_changed(qreal)));
@@ -1312,8 +1311,11 @@ void DudeShield::process_connect()
             connect(ui->editRPTR2, SIGNAL(textChanged(QString)), m_dcs, SLOT(rptr2_changed(QString)));
             connect(ui->checkSWRX, SIGNAL(stateChanged(int)), m_dcs, SLOT(swrx_state_changed(int)));
             connect(ui->checkSWTX, SIGNAL(stateChanged(int)), m_dcs, SLOT(swtx_state_changed(int)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_dcs, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_dcs, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_dcs, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_dcs, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_dcs, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_dcs, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_dcs, SLOT(decoder_gain_changed(qreal)));
@@ -1342,8 +1344,11 @@ void DudeShield::process_connect()
             connect(ui->editRPTR2, SIGNAL(textChanged(QString)), m_xrf, SLOT(rptr2_changed(QString)));
             connect(ui->checkSWRX, SIGNAL(stateChanged(int)), m_xrf, SLOT(swrx_state_changed(int)));
             connect(ui->checkSWTX, SIGNAL(stateChanged(int)), m_xrf, SLOT(swtx_state_changed(int)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_xrf, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_xrf, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_xrf, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_xrf, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_xrf, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_xrf, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_xrf, SLOT(decoder_gain_changed(qreal)));
@@ -1367,8 +1372,11 @@ void DudeShield::process_connect()
             connect(this, SIGNAL(input_source_changed(int, QString)), m_ysf, SLOT(input_src_changed(int, QString)));
             connect(ui->checkSWRX, SIGNAL(stateChanged(int)), m_ysf, SLOT(swrx_state_changed(int)));
             connect(ui->checkSWTX, SIGNAL(stateChanged(int)), m_ysf, SLOT(swtx_state_changed(int)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_ysf, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_ysf, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_ysf, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_ysf, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_ysf, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_ysf, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_ysf, SLOT(decoder_gain_changed(qreal)));
@@ -1376,8 +1384,6 @@ void DudeShield::process_connect()
             m_modethread->start();
         }
         if(m_protocol == "DMR"){
-            //dmrid = dmrids.key(callsign);
-            //dmr_password = sl.at(2).simplified();
             dmrid = ui->editDMRID->text().toUInt();
             dmr_password = (ui->editPassword->text().isEmpty()) ? sl.at(2).simplified() : ui->editPassword->text();
             dmr_destid = ui->editTG->text().toUInt();
@@ -1398,6 +1404,9 @@ void DudeShield::process_connect()
             connect(ui->checkSWTX, SIGNAL(stateChanged(int)), m_dmr, SLOT(swtx_state_changed(int)));
             connect(this, SIGNAL(on_startTX()), m_dmr, SLOT(start_tx()),Qt::QueuedConnection);
             connect(this, SIGNAL(on_stopTX()), m_dmr, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_dmr, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_dmr, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_dmr, SLOT(decoder_gain_changed(qreal)));
@@ -1416,8 +1425,11 @@ void DudeShield::process_connect()
             connect(m_modethread, SIGNAL(finished()), m_p25, SLOT(deleteLater()));
             connect(this, SIGNAL(input_source_changed(int, QString)), m_p25, SLOT(input_src_changed(int, QString)));
             connect(this, SIGNAL(dmr_tgid_changed(unsigned int)), m_p25, SLOT(dmr_tgid_changed(unsigned int)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_p25, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_p25, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_p25, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_p25, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_p25, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_p25, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_p25, SLOT(decoder_gain_changed(qreal)));
@@ -1437,8 +1449,11 @@ void DudeShield::process_connect()
             connect(this, SIGNAL(input_source_changed(int, QString)), m_nxdn, SLOT(input_src_changed(int, QString)));
             connect(ui->checkSWRX, SIGNAL(stateChanged(int)), m_nxdn, SLOT(swrx_state_changed(int)));
             connect(ui->checkSWTX, SIGNAL(stateChanged(int)), m_nxdn, SLOT(swtx_state_changed(int)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_nxdn, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_nxdn, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_nxdn, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_nxdn, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_nxdn, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_nxdn, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_nxdn, SLOT(decoder_gain_changed(qreal)));
@@ -1455,8 +1470,11 @@ void DudeShield::process_connect()
             connect(m_modethread, SIGNAL(started()), m_m17, SLOT(send_connect()));
             connect(m_modethread, SIGNAL(finished()), m_m17, SLOT(deleteLater()));
             connect(this, SIGNAL(input_source_changed(int, QString)), m_m17, SLOT(input_src_changed(int, QString)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_m17, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_m17, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_m17, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_m17, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_m17, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_m17, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_m17, SLOT(decoder_gain_changed(qreal)));
@@ -1477,8 +1495,11 @@ void DudeShield::process_connect()
             connect(m_modethread, SIGNAL(started()), m_iax, SLOT(send_connect()));
             connect(m_modethread, SIGNAL(finished()), m_iax, SLOT(deleteLater()));
             connect(this, SIGNAL(input_source_changed(int, QString)), m_iax, SLOT(input_src_changed(int, QString)));
-            connect(ui->pushTX, SIGNAL(pressed()), m_iax, SLOT(start_tx()));
-            connect(ui->pushTX, SIGNAL(released()), m_iax, SLOT(stop_tx()));
+            connect(this, SIGNAL(on_startTX()), m_iax, SLOT(start_tx()),Qt::QueuedConnection);
+            connect(this, SIGNAL(on_stopTX()), m_iax, SLOT(stop_tx()),Qt::QueuedConnection);
+#ifdef Q_OS_RPI
+            init_gpio (true);
+#endif
             connect(this, SIGNAL(out_audio_vol_changed(qreal)), m_iax, SLOT(out_audio_vol_changed(qreal)));
             connect(this, SIGNAL(in_audio_vol_changed(qreal)), m_iax, SLOT(in_audio_vol_changed(qreal)));
             connect(this, SIGNAL(codec_gain_changed(qreal)), m_iax, SLOT(decoder_gain_changed(qreal)));
@@ -2001,18 +2022,22 @@ bool DudeShield::event(QEvent * event) // overloading event(QEvent*) method of Q
 void DudeShield::_callbackGPIO(int gpio,int level, uint32_t tick)
 {
     qWarning()<< tr("GPIO Change  occured : Pin ") << QString::number(gpio) << tr("=") << QString::number(level) << tr(" at ") << QString::number(tick);
-    if (level == 1)
+    // PTT Push Button
+    if (gpio == m_PTT_PIN)
     {
-        if (ui->pushTX->isEnabled())
+        if (level == 1)
         {
-            ui->pushTX->setDown(true);
-            emit(on_startTX());
+            if (ui->pushTX->isEnabled())
+            {
+                ui->pushTX->setDown(true);
+                emit(on_startTX());
+            }
         }
-    }
-    else
-    {
-        ui->pushTX->setDown(false);
-        emit(on_stopTX());
+        else
+        {
+            ui->pushTX->setDown(false);
+            emit(on_stopTX());
+        }
     }
 
 }
@@ -2021,6 +2046,34 @@ void DudeShield::_callbackGPIOExt(int gpio,int level, uint32_t tick, void* user)
 {
     DudeShield* mySelf= (DudeShield *) user;
     mySelf->_callbackGPIO(gpio, level, tick);
+}
+
+void DudeShield::init_gpio(bool pFlag)
+{
+    if (! m_GPIO_ON) return;
+    if (pFlag)
+    {
+        if (gpioInitialise() < 0)
+        {
+            qWarning() << tr("pigpio initialisation failed : are you sure you have launched this app as root?");
+        }
+        else
+        {
+            qDebug() << "pigpio initialised ok";
+            //Set PTT Pin
+            gpioSetMode(m_PTT_PIN, PI_INPUT);
+            gpioSetPullUpDown(m_PTT_PIN, PI_PUD_OFF);
+            gpioSetAlertFuncEx(m_PTT_PIN, _callbackGPIOExt, (void *)this);
+            //Set TX LED Pin
+            gpioSetMode(m_TX_LED_PIN, PI_OUTPUT);
+            //Set RX LED Pin
+            gpioSetMode(m_RX_LED_PIN, PI_OUTPUT);
+        }
+    }
+    else
+    {
+        gpio_terminate();
+    }
 }
 #endif
 
@@ -2283,6 +2336,14 @@ void DudeShield::closeEvent(QCloseEvent*)
     m_settings.setValue("IAXHOST", ui->editIAXHost->text());
     m_settings.setValue("IAXPORT", ui->editIAXPort->text());
     m_settings.endGroup();
+
+#ifdef Q_OS_RPI
+    m_settings.beginGroup("gpio");
+    m_settings.setValue("PTT_PIN",m_PTT_PIN);
+    m_settings.setValue("TX_LED_PIN",m_TX_LED_PIN);
+    m_settings.setValue("RX_LED_PIN",m_RX_LED_PIN);
+    m_settings.endGroup();
+#endif
 }
 
 ///
