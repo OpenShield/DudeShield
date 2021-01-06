@@ -19,6 +19,7 @@
 #define DudeShield_H
 
 #include <QMainWindow>
+#include <QMap>
 #include <QButtonGroup>
 #include <QLabel>
 #include <QKeyEvent>
@@ -150,7 +151,8 @@ static void _callbackGPIOExt(int gpio,int level, uint32_t tick, void* user);
     int m_PTT_PIN;
     int m_TX_LED_PIN;
     int m_RX_LED_PIN;
-    bool m_GPIO_ON
+    bool m_GPIO_ON;
+    QMap<QString,int> m_GPIO_PINs;
 #endif
 protected:
     void    keyPressEvent(QKeyEvent* event);

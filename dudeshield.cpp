@@ -255,6 +255,55 @@ void DudeShield::init_gui()
     m_TX_LED_PIN = m_settings.value("TX_LED_PIN",19).toInt();
     m_RX_LED_PIN = m_settings.value("RX_LED_PIN",20).toInt();
     m_settings.endGroup();
+
+    //init GPIO pin Table
+    QString RPIVersion = QString(RPI_VERSION);
+    m_GPIO_PINs.insert("GPIO 02",2);
+    m_GPIO_PINs.insert("GPIO 03",3);
+    m_GPIO_PINs.insert("GPIO 03",4);
+    m_GPIO_PINs.insert("GPIO 07",7);
+    m_GPIO_PINs.insert("GPIO 08",8);
+    m_GPIO_PINs.insert("GPIO 09",9);
+    m_GPIO_PINs.insert("GPIO 10",10);
+    m_GPIO_PINs.insert("GPIO 11",11);
+    m_GPIO_PINs.insert("GPIO 14",14);
+    m_GPIO_PINs.insert("GPIO 15",15);
+    m_GPIO_PINs.insert("GPIO 17",17);
+    m_GPIO_PINs.insert("GPIO 18",18);
+    m_GPIO_PINs.insert("GPIO 22",22);
+    m_GPIO_PINs.insert("GPIO 23",23);
+    m_GPIO_PINs.insert("GPIO 24",24);
+    m_GPIO_PINs.insert("GPIO 25",25);
+    m_GPIO_PINs.insert("GPIO 27",27);
+    //if pin GPIO port
+    if (!(RPIVersion=="A" || RPIVersion=="B"))
+    {
+        m_GPIO_PINs.insert("GPIO 05",5);
+        m_GPIO_PINs.insert("GPIO 06",6);
+        m_GPIO_PINs.insert("GPIO 12",12);
+        m_GPIO_PINs.insert("GPIO 13",13);
+        m_GPIO_PINs.insert("GPIO 16",16);
+        m_GPIO_PINs.insert("GPIO 19",19);
+        m_GPIO_PINs.insert("GPIO 20",20);
+        m_GPIO_PINs.insert("GPIO 21",21);
+        m_GPIO_PINs.insert("GPIO 26",26);
+    }
+    //Init Gui Page Tab
+    ui->gbGPIO->setEnabled(true);
+    for (auto pin : m_GPIO_PINs.toStdMap())
+    {
+        ui->cbPTTPin->addItem(pin.first, pin.second);
+        ui->cbRXLEDPIN->addItem(pin.first, pin.second);
+        ui->cbTXLEDPin->addItem(pin.first, pin.second);
+    }
+    ui->cbGPIOON->setEnabled(true);
+    if (m_GPIO_ON)
+    {
+        ui->cbPTTPin->setEnabled(true);
+        ui->cbRXLEDPIN->setEnabled(true);
+        ui->cbTXLEDPin->setEnabled(true);
+    }
+
 #endif
     m_uitimer = new QTimer();
     connect(m_uitimer, SIGNAL(timeout()), this, SLOT(update_ui()));
@@ -2072,7 +2121,7 @@ void DudeShield::init_gpio(bool pFlag)
     }
     else
     {
-        gpio_terminate();
+        gpioTerminate();
     }
 }
 #endif

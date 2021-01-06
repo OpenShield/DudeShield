@@ -56,10 +56,12 @@ unix:!macx {
     isEmpty(GIT_PATH) : GIT_PATH=git
     # =======================================================================
     # Detect Raspberry platform
-    RASPBERRY = $$system(bash $$PWD/onrpi)
-    !isEmpty(RASPBERRY) {
+    RPIVERSION = $$system(bash $$PWD/onrpi)
+    !isEmpty(RPIVERSION) {
         message(Raspberry Hardware Detected)
+        message(Model = $$RPIVERSION)
         DEFINES+= Q_OS_RPI
+        DEFINES+= RPI_VERSION=\\\"$${RPIVERSION}\\\"
         LIBS += -lpigpio
     }
 }
