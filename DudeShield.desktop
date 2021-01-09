@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0.0
+Type=Application
+Categories=Audio;HamRadio
+Terminal=false
+Exec=/usr/bin/dudeshield
+Name=DudeShield
+Comment=Digital Radio Client for DRM networks
+Icon=/usr/share/icons/hicolor/72x72/apps/dudeshield.png

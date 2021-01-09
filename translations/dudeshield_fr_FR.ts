@@ -10,387 +10,672 @@
     </message>
     <message>
         <location filename="../audioengine.cpp" line="94"/>
-        <location filename="../audioengine.cpp" line="133"/>
+        <location filename="../audioengine.cpp" line="131"/>
         <source>Raw audio format not supported by backend, trying nearest format.</source>
         <translation>Le format audio brute n&apos;est pas supporté par l&apos;application, essayez un format proche.</translation>
     </message>
     <message>
         <location filename="../audioengine.cpp" line="96"/>
-        <location filename="../audioengine.cpp" line="135"/>
+        <location filename="../audioengine.cpp" line="133"/>
         <source>Format now set to </source>
         <translation>Le format est défini à </translation>
     </message>
     <message>
-        <location filename="../audioengine.cpp" line="102"/>
         <source>Using playback device </source>
-        <translation>Utilisation du périphérique de lecteur </translation>
+        <translation type="vanished">Utilisation du périphérique de lecteur </translation>
     </message>
     <message>
-        <location filename="../audioengine.cpp" line="141"/>
         <source>Using recording device </source>
-        <translation>Utilisation du périphérique d&apos;enregistrement </translation>
+        <translation type="vanished">Utilisation du périphérique d&apos;enregistrement </translation>
+    </message>
+</context>
+<context>
+    <name>DudeShield</name>
+    <message>
+        <location filename="../dudeshield.ui" line="14"/>
+        <source>DudeShield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="35"/>
+        <source>Main</source>
+        <translation type="unfinished">Principal</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="47"/>
+        <source>Mic Gain</source>
+        <translation type="unfinished">Gain Micro</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="65"/>
+        <source>TTS1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="84"/>
+        <location filename="../dudeshield.ui" line="506"/>
+        <source>RPTR1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="104"/>
+        <location filename="../dudeshield.ui" line="275"/>
+        <source>Mute</source>
+        <translation type="unfinished">Silence</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="111"/>
+        <source>Codec output gain adjust.  This is not an audio device volume control.  0 = no adjustment to codec output.</source>
+        <translation type="unfinished">Ajustement du gain de sortie du codec. Ce n&apos;est pas un contrôle du volume de sortie audio.  0 = aucun ajustement sur la sortie du codec.</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="124"/>
+        <source>TTS2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="131"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="148"/>
+        <source>Connect</source>
+        <translation type="unfinished">Connexion</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="155"/>
+        <source>Mic In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="184"/>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="204"/>
+        <source>Private</source>
+        <translation type="unfinished">Privé</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="217"/>
+        <location filename="../dudeshield.ui" line="624"/>
+        <source>MYCALL</source>
+        <translation type="unfinished">Indicatif</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="224"/>
+        <source>SWRX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="231"/>
+        <source>Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="238"/>
+        <source>TTS3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="245"/>
+        <location filename="../dudeshield.ui" line="590"/>
+        <source>Host</source>
+        <translation type="unfinished">Serveur</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="252"/>
+        <source>Audio capture device gain adjust .</source>
+        <translation type="unfinished">Ajustement du gain audio du périphérique de capture.</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="268"/>
+        <source>Talkgroup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="282"/>
+        <source>Codec Gain</source>
+        <translation type="unfinished">Gain du Codec</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="295"/>
+        <source>SWTX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="305"/>
+        <source>TX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="318"/>
+        <location filename="../dudeshield.ui" line="640"/>
+        <source>RPTR2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="354"/>
+        <location filename="../dudeshield.ui" line="566"/>
+        <source>URCALL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="367"/>
+        <source>StreamID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="423"/>
+        <source>IAX DTMF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="433"/>
+        <source>Send</source>
+        <translation type="unfinished">Envoyer</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="441"/>
+        <source>Settings</source>
+        <translation type="unfinished">Réglages</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="472"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="479"/>
+        <source>User txt</source>
+        <translation type="unfinished">Txt Utilisateurs</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="492"/>
+        <source>M17 Settings</source>
+        <translation type="unfinished">Réglages M17</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="499"/>
+        <source>ColorCode</source>
+        <translation type="unfinished">Code Couleur</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="523"/>
+        <source>DMR ID</source>
+        <translation type="unfinished">ID DMR</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="530"/>
+        <source>Node[@context]</source>
+        <translation type="unfinished">Noeud[@context]</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="537"/>
+        <source>3200 Voice</source>
+        <translation type="unfinished">3200 Voix</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="553"/>
+        <source>DMR Settings</source>
+        <translation type="unfinished">Réglages DMR</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="573"/>
+        <source>Vocoder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="580"/>
+        <source>Callsign</source>
+        <translation type="unfinished">Indicatif</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="600"/>
+        <source>DMR+ options</source>
+        <translation type="unfinished">Options DMR+</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="610"/>
+        <source>Location</source>
+        <translation type="unfinished">Localisation</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="617"/>
+        <source>Capture device</source>
+        <translation type="unfinished">Périphérique de capture</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="650"/>
+        <source>Send DMR+ options on connect</source>
+        <translation type="unfinished">Envoyer les options DMR+ à la connexion</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="670"/>
+        <source>Password</source>
+        <translation type="unfinished">Mot de passe</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="693"/>
+        <source>Slot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="700"/>
+        <source>default context = iax-client</source>
+        <extracomment>default context = iax-client</extracomment>
+        <translation type="unfinished">context par défaut = iax-client</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="736"/>
+        <source>Playback device</source>
+        <translation type="unfinished">Périphérique d&apos;écoute</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="766"/>
+        <source>DSTAR Settings</source>
+        <translation type="unfinished">Réglages DSTAR</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="779"/>
+        <source>ESSID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="856"/>
+        <source>default port = 4569</source>
+        <translation type="unfinished">Port par défaut = 4569</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="863"/>
+        <source>Latitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="870"/>
+        <source>DMR Hotspot security password</source>
+        <translation type="unfinished">Mot de passe sécurité Hotspot DMR</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="884"/>
+        <source>Longitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="891"/>
+        <source>Username</source>
+        <translation type="unfinished">Utilisateur</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="898"/>
+        <source>1600 Voice / Data</source>
+        <translation type="unfinished">1600 Voix / Données</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="911"/>
+        <source>IAX Settings</source>
+        <translation type="unfinished">Réglages IAX</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="918"/>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="928"/>
+        <source>Update host files</source>
+        <translation type="unfinished">Mettre à jour les fichiers d&apos;hôtes</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="935"/>
+        <source>Update ID files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="947"/>
+        <source>I/O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="956"/>
+        <source>GPIO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="975"/>
+        <source>RX LED Pin:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1008"/>
+        <source>TX LED Pin:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1021"/>
+        <source>PTT Pin :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1037"/>
+        <source>Enable GPIO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1061"/>
+        <source>Log</source>
+        <translation type="unfinished">Log</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1069"/>
+        <source>Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1078"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1085"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1092"/>
+        <source>Verbose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.ui" line="1112"/>
+        <source>About</source>
+        <translation type="unfinished">A Propos</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="134"/>
+        <source>Welcome to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="241"/>
+        <source>&lt;p&gt;%1 Version %2.%3 Build %4&lt;/p&gt;&lt;p&gt;Forked by F4IKZ for TheShield Network&lt;/p&gt;&lt;p&gt;Copyright (C) 2019-2021 Doug McLain AD8DP&lt;/p&gt;&lt;P&gt;Logo copyright (C) 2020 Austin Grubbs KY4DAG&lt;/p&gt;&lt;p&gt;This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;http://www.gnu.org/licenses/&lt;/a&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="353"/>
+        <source>Downloading </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="359"/>
+        <source>Downloaded </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1241"/>
+        <source>Disconnected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1287"/>
+        <source>Select host</source>
+        <translation type="unfinished">Séléctionner un serveur</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1287"/>
+        <source>No host selected</source>
+        <translation type="unfinished">Aucun serveur sélectionné</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1313"/>
+        <source>Connecting to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1629"/>
+        <location filename="../dudeshield.cpp" line="1673"/>
+        <location filename="../dudeshield.cpp" line="1854"/>
+        <source>Connection refused</source>
+        <translation type="unfinished">Connexion refusée</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1629"/>
+        <location filename="../dudeshield.cpp" line="1673"/>
+        <source>M17 connection refused.  Check callsign and confirm this callsign or IP is not already connected to this reflector</source>
+        <translation type="unfinished">Connexion M17 refusée. Vérifiez votre indicatif et confirmez celui ci ou IP n&apos;est pas encore connecté sur ce réflecteur</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1693"/>
+        <source>Connected to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="1854"/>
+        <source>DMR connection refused.  Check callsign, DMR ID, or password</source>
+        <translation type="unfinished">Connexion DMR refusée. Vérifiez votre indicatif, votre ID DMR ou votre mot de passe</translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2090"/>
+        <source>GPIO Change  occured : Pin </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2090"/>
+        <source>=</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2090"/>
+        <source> at </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2131"/>
+        <source>pigpio initialisation failed : are you sure you have launched this app as root?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2487"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2488"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2510"/>
+        <source>Web File (*.htm *.html)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dudeshield.cpp" line="2520"/>
+        <source>An Error occur while opening </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DudeStar</name>
     <message>
-        <location filename="../dudestar.ui" line="14"/>
         <source>DUDE-Star</source>
-        <translation>DUDE-Star : Shield Edition</translation>
+        <translation type="vanished">DUDE-Star : Shield Edition</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="35"/>
         <source>Main</source>
-        <translation>Principal</translation>
+        <translation type="vanished">Principal</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="252"/>
         <source>Audio capture device gain adjust .</source>
-        <translation>Ajustement du gain audio du périphérique de capture.</translation>
+        <translation type="vanished">Ajustement du gain audio du périphérique de capture.</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="217"/>
-        <location filename="../dudestar.ui" line="624"/>
         <source>MYCALL</source>
-        <translation>Indicatif</translation>
+        <translation type="vanished">Indicatif</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="148"/>
         <source>Connect</source>
-        <translation>Connexion</translation>
+        <translation type="vanished">Connexion</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="65"/>
-        <source>TTS1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="231"/>
-        <source>Module</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="268"/>
-        <source>Talkgroup</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="318"/>
-        <location filename="../dudestar.ui" line="640"/>
-        <source>RPTR2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="131"/>
-        <source>Mode</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="305"/>
-        <source>TX</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="282"/>
         <source>Codec Gain</source>
-        <translation>Gain du Codec</translation>
+        <translation type="vanished">Gain du Codec</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="47"/>
         <source>Mic Gain</source>
-        <translation>Gain Micro</translation>
+        <translation type="vanished">Gain Micro</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="155"/>
-        <source>Mic In</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="238"/>
-        <source>TTS3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="84"/>
-        <location filename="../dudestar.ui" line="506"/>
-        <source>RPTR1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="367"/>
-        <source>StreamID</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="111"/>
         <source>Codec output gain adjust.  This is not an audio device volume control.  0 = no adjustment to codec output.</source>
-        <translation>Ajustement du gain de sortie du codec. Ce n&apos;est pas un contrôle du volume de sortie audio.  0 = aucun ajustement sur la sortie du codec.</translation>
+        <translation type="vanished">Ajustement du gain de sortie du codec. Ce n&apos;est pas un contrôle du volume de sortie audio.  0 = aucun ajustement sur la sortie du codec.</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="295"/>
-        <source>SWTX</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="184"/>
-        <source>Volume</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="224"/>
-        <source>SWRX</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="245"/>
-        <location filename="../dudestar.ui" line="590"/>
         <source>Host</source>
-        <translation>Serveur</translation>
+        <translation type="vanished">Serveur</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="354"/>
-        <location filename="../dudestar.ui" line="566"/>
-        <source>URCALL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="104"/>
-        <location filename="../dudestar.ui" line="275"/>
         <source>Mute</source>
-        <translation>Silence</translation>
+        <translation type="vanished">Silence</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="204"/>
         <source>Private</source>
-        <translation>Privé</translation>
+        <translation type="vanished">Privé</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="124"/>
-        <source>TTS2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="423"/>
-        <source>IAX DTMF</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="433"/>
         <source>Send</source>
-        <translation>Envoyer</translation>
+        <translation type="vanished">Envoyer</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="441"/>
         <source>Settings</source>
-        <translation>Réglages</translation>
+        <translation type="vanished">Réglages</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="492"/>
         <source>M17 Settings</source>
-        <translation>Réglages M17</translation>
+        <translation type="vanished">Réglages M17</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="499"/>
         <source>ColorCode</source>
-        <translation>Code Couleur</translation>
+        <translation type="vanished">Code Couleur</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="530"/>
         <source>Node[@context]</source>
-        <translation>Noeud[@context]</translation>
+        <translation type="vanished">Noeud[@context]</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="677"/>
         <source>Password</source>
-        <translation>Mot de passe</translation>
+        <translation type="vanished">Mot de passe</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="707"/>
         <source>default context = iax-client</source>
         <extracomment>default context = iax-client</extracomment>
-        <translation>context par défaut = iax-client</translation>
+        <translation type="vanished">context par défaut = iax-client</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="870"/>
         <source>default port = 4569</source>
-        <translation>Port par défaut = 4569</translation>
+        <translation type="vanished">Port par défaut = 4569</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="884"/>
         <source>DMR Hotspot security password</source>
-        <translation>Mot de passe sécurité Hotspot DMR</translation>
+        <translation type="vanished">Mot de passe sécurité Hotspot DMR</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="953"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:8pt;&quot;&gt;Coming soon...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="780"/>
         <source>DSTAR Settings</source>
-        <translation>Réglages DSTAR</translation>
+        <translation type="vanished">Réglages DSTAR</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="610"/>
         <source>Location</source>
-        <translation>Localisation</translation>
+        <translation type="vanished">Localisation</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="617"/>
         <source>Capture device</source>
-        <translation>Périphérique de capture</translation>
+        <translation type="vanished">Périphérique de capture</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="553"/>
         <source>DMR Settings</source>
-        <translation>Réglages DMR</translation>
+        <translation type="vanished">Réglages DMR</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="650"/>
         <source>Send DMR+ options on connect</source>
-        <translation>Envoyer les options DMR+ à la connexion</translation>
+        <translation type="vanished">Envoyer les options DMR+ à la connexion</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="905"/>
         <source>Username</source>
-        <translation>Utilisateur</translation>
+        <translation type="vanished">Utilisateur</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="912"/>
         <source>1600 Voice / Data</source>
-        <translation>1600 Voix / Données</translation>
+        <translation type="vanished">1600 Voix / Données</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="700"/>
-        <source>Slot</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="877"/>
-        <source>Latitude</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="573"/>
-        <source>Vocoder</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="898"/>
-        <source>Longitude</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="479"/>
         <source>User txt</source>
-        <translation>Txt Utilisateurs</translation>
+        <translation type="vanished">Txt Utilisateurs</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="472"/>
-        <source>Description</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="600"/>
         <source>DMR+ options</source>
-        <translation>Options DMR+</translation>
+        <translation type="vanished">Options DMR+</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="537"/>
         <source>3200 Voice</source>
-        <translation>3200 Voix</translation>
+        <translation type="vanished">3200 Voix</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="580"/>
         <source>Callsign</source>
-        <translation>Indicatif</translation>
+        <translation type="vanished">Indicatif</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="750"/>
         <source>Playback device</source>
-        <translation>Périphérique d&apos;écoute</translation>
+        <translation type="vanished">Périphérique d&apos;écoute</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="793"/>
-        <source>ESSID</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="523"/>
         <source>DMR ID</source>
-        <translation>ID DMR</translation>
+        <translation type="vanished">ID DMR</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="724"/>
         <source>Update DMRIDs</source>
-        <translation>Mettre à jour les ID DMR</translation>
+        <translation type="vanished">Mettre à jour les ID DMR</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="657"/>
         <source>Update host files</source>
-        <translation>Mettre à jour les fichiers d&apos;hôtes</translation>
+        <translation type="vanished">Mettre à jour les fichiers d&apos;hôtes</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="925"/>
         <source>IAX Settings</source>
-        <translation>Réglages IAX</translation>
+        <translation type="vanished">Réglages IAX</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="932"/>
-        <source>Port</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.ui" line="947"/>
         <source>Log</source>
-        <translation>Log</translation>
+        <translation type="vanished">Log</translation>
     </message>
     <message>
-        <location filename="../dudestar.ui" line="965"/>
         <source>About</source>
-        <translation>A Propos</translation>
+        <translation type="vanished">A Propos</translation>
     </message>
     <message>
-        <location filename="../dudestar.cpp" line="238"/>
-        <source>&lt;p&gt;%1 Version %2.%3 Build %4&lt;/p&gt;&lt;p&gt;Forked by Artemia76 for TheShield Network&lt;/p&gt;&lt;p&gt;Copyright (C) 2019-2021 Doug McLain AD8DP&lt;/p&gt;&lt;P&gt;Logo copyright (C) 2020 Austin Grubbs KY4DAG&lt;/p&gt;&lt;p&gt;This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;http://www.gnu.org/licenses/&lt;/a&gt;&lt;/p&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../dudestar.cpp" line="1432"/>
         <source>Select host</source>
         <translatorcomment>Aucun serveur de séléctionné</translatorcomment>
-        <translation>Séléctionner un serveur</translation>
+        <translation type="vanished">Séléctionner un serveur</translation>
     </message>
     <message>
-        <location filename="../dudestar.cpp" line="1432"/>
         <source>No host selected</source>
-        <translation>Aucun serveur sélectionné</translation>
+        <translation type="vanished">Aucun serveur sélectionné</translation>
     </message>
     <message>
-        <location filename="../dudestar.cpp" line="1744"/>
-        <location filename="../dudestar.cpp" line="1790"/>
-        <location filename="../dudestar.cpp" line="1978"/>
         <source>Connection refused</source>
-        <translation>Connexion refusée</translation>
+        <translation type="vanished">Connexion refusée</translation>
     </message>
     <message>
-        <location filename="../dudestar.cpp" line="1744"/>
-        <location filename="../dudestar.cpp" line="1790"/>
         <source>M17 connection refused.  Check callsign and confirm this callsign or IP is not already connected to this reflector</source>
-        <translation>Connexion M17 refusée. Vérifiez votre indicatif et confirmez celui ci ou IP n&apos;est pas encore connecté sur ce réflecteur</translation>
+        <translation type="vanished">Connexion M17 refusée. Vérifiez votre indicatif et confirmez celui ci ou IP n&apos;est pas encore connecté sur ce réflecteur</translation>
     </message>
     <message>
-        <location filename="../dudestar.cpp" line="1978"/>
         <source>DMR connection refused.  Check callsign, DMR ID, or password</source>
-        <translation>Connexion DMR refusée. Vérifiez votre indicatif, votre ID DMR ou votre mot de passe</translation>
+        <translation type="vanished">Connexion DMR refusée. Vérifiez votre indicatif, votre ID DMR ou votre mot de passe</translation>
     </message>
 </context>
 </TS>

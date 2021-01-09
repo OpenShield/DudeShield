@@ -280,11 +280,6 @@ contains(DEFINES, USE_FLITE){
 }
 RC_ICONS = images/dudeshield.ico
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 RESOURCES += \
     dudeshield.qrc
 
@@ -449,5 +444,6 @@ QMAKE_EXTRA_TARGETS += deploy copydata all
 DISTFILES += \
     gpl-2.0.md \
     onrpi \
-    Info.plist
+    Info.plist \
+    DudeShield.desktop
 
