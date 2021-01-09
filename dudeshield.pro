@@ -334,7 +334,7 @@ unix:!macx {
     INSTALLS += Translation
 
     Icons.path = $$PREFIX/share/icons/hicolor/72x72/apps
-    Icons.files = $$PWD/images/dudeshield.png
+    Icons.files = $$PWD/images/dudeshield_72x72px.png
     INSTALLS += Icons
 
     Shortcut.path = $$PREFIX/share/applications
