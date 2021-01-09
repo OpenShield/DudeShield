@@ -66,8 +66,8 @@ private:
     void init_gui();
 #ifdef Q_OS_RPI
     void init_gpio(bool pFlag);
-    void _callbackGPIO(int gpio,int level, uint32_t tick);
-static void _callbackGPIOExt(int gpio,int level, uint32_t tick, void* user);
+    void _callbackGPIO(int pi,unsigned int gpio,unsigned int level, uint32_t tick);
+static void _callbackGPIOExt(int pi, unsigned int gpio,unsigned int level, uint32_t tick, void* user);
 #endif
     Ui::DudeShield *ui;
     LevelMeter *m_levelmeter;
@@ -148,10 +148,10 @@ static void _callbackGPIOExt(int gpio,int level, uint32_t tick, void* user);
     QSettings m_settings;
     int m_maxLine;
 #ifdef Q_OS_RPI
+    int m_pigpiod_session;
     int m_PTT_PIN;
     int m_TX_LED_PIN;
     int m_RX_LED_PIN;
-    bool m_GPIO_ON;
     QMap<QString,int> m_GPIO_PINs;
 #endif
 protected:
@@ -217,6 +217,8 @@ private slots:
     void on_rb_filterNormal_toggled(bool checked);
 
     void on_rb_filterVerbose_toggled(bool checked);
+
+    void on_cbGPIOON_stateChanged(int arg1);
 
 signals:
     void on_startTX();

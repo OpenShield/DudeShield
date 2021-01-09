@@ -35,7 +35,7 @@
 #include "tools/version.h"
 
 #ifdef Q_OS_RPI
-    #include <pigpio.h>
+    #include <pigpiod_if2.h>
 #endif
 
 #define LOBYTE(w)			((uint8_t)(uint16_t)(w & 0x00FF))
@@ -249,12 +249,6 @@ void DudeShield::init_gui()
                               "General Public License along with this program. "
                               "If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a></p>").arg(APP_NAME).arg(APP_MAJOR).arg(APP_MINOR).arg(APP_BUILD));
 #ifdef Q_OS_RPI
-    m_settings.beginGroup("gpio");
-    m_GPIO_ON = m_settings.value("GPIO_ON",true).toBool();
-    m_PTT_PIN = m_settings.value("PTT_PIN",18).toInt();
-    m_TX_LED_PIN = m_settings.value("TX_LED_PIN",19).toInt();
-    m_RX_LED_PIN = m_settings.value("RX_LED_PIN",20).toInt();
-    m_settings.endGroup();
 
     //init GPIO pin Table
     QString RPIVersion = QString(RPI_VERSION);
@@ -293,17 +287,10 @@ void DudeShield::init_gui()
     for (auto pin : m_GPIO_PINs.toStdMap())
     {
         ui->cbPTTPin->addItem(pin.first, pin.second);
-        ui->cbRXLEDPIN->addItem(pin.first, pin.second);
+        ui->cbRXLEDPin->addItem(pin.first, pin.second);
         ui->cbTXLEDPin->addItem(pin.first, pin.second);
     }
     ui->cbGPIOON->setEnabled(true);
-    if (m_GPIO_ON)
-    {
-        ui->cbPTTPin->setEnabled(true);
-        ui->cbRXLEDPIN->setEnabled(true);
-        ui->cbTXLEDPin->setEnabled(true);
-    }
-
 #endif
     m_uitimer = new QTimer();
     connect(m_uitimer, SIGNAL(timeout()), this, SLOT(update_ui()));
@@ -1879,8 +1866,16 @@ void DudeShield::update_dmr_data()
     }
     status_txt->setText(" Host: " + m_dmr->get_host() + ":" + QString::number( m_dmr->get_port()) + " Ping: " + QString::number(m_dmr->get_cnt()));
     if(m_dmr->get_src()){
+#ifdef Q_OS_RPI
+            gpio_write(m_pigpiod_session,m_RX_LED_PIN,1);
+#endif
         ui->data1->setText(m_dmrids[m_dmr->get_src()]);
         ui->data2->setText(QString::number(m_dmr->get_src()));
+    }
+    else {
+#ifdef Q_OS_RPI
+            gpio_write(m_pigpiod_session,m_RX_LED_PIN,0);
+#endif
     }
     ui->data3->setText(m_dmr->get_dst() ? QString::number(m_dmr->get_dst()) : "");
     ui->data4->setText(m_dmr->get_gw() ? QString::number(m_dmr->get_gw()) : "");
@@ -2024,6 +2019,10 @@ void DudeShield::keyPressEvent(QKeyEvent* event)
         if (ui->pushTX->isEnabled())
         {
             ui->pushTX->setDown(true);
+#ifdef Q_OS_RPI
+            gpio_write(m_pigpiod_session,m_TX_LED_PIN,1);
+            gpio_write(m_pigpiod_session,m_RX_LED_PIN,0);
+#endif
             emit(on_startTX());
         }
         event->accept();
@@ -2037,6 +2036,9 @@ void DudeShield::keyReleaseEvent(QKeyEvent* event)
     {
         m_log->log("keyReleaseEvent occured",Qt::magenta,LEVEL_NORMAL);
         ui->pushTX->setDown(false);
+#ifdef Q_OS_RPI
+            gpio_write(m_pigpiod_session,m_TX_LED_PIN,0);
+#endif
         emit(on_stopTX());
         event->accept();
     }
@@ -2068,7 +2070,7 @@ bool DudeShield::event(QEvent * event) // overloading event(QEvent*) method of Q
 
 #ifdef Q_OS_RPI
 
-void DudeShield::_callbackGPIO(int gpio,int level, uint32_t tick)
+void DudeShield::_callbackGPIO(int pi, unsigned int gpio,unsigned int level, uint32_t tick)
 {
     qWarning()<< tr("GPIO Change  occured : Pin ") << QString::number(gpio) << tr("=") << QString::number(level) << tr(" at ") << QString::number(tick);
     // PTT Push Button
@@ -2079,30 +2081,37 @@ void DudeShield::_callbackGPIO(int gpio,int level, uint32_t tick)
             if (ui->pushTX->isEnabled())
             {
                 ui->pushTX->setDown(true);
+#ifdef Q_OS_RPI
+                gpio_write(m_pigpiod_session,m_TX_LED_PIN,1);
+                gpio_write(m_pigpiod_session,m_RX_LED_PIN,0);
+#endif
                 emit(on_startTX());
             }
         }
         else
         {
             ui->pushTX->setDown(false);
+#ifdef Q_OS_RPI
+            gpio_write(m_pigpiod_session,m_TX_LED_PIN,0);
+#endif
             emit(on_stopTX());
         }
     }
 
 }
 
-void DudeShield::_callbackGPIOExt(int gpio,int level, uint32_t tick, void* user)
+void DudeShield::_callbackGPIOExt(int pi, unsigned int gpio,unsigned int level, uint32_t tick, void* user)
 {
     DudeShield* mySelf= (DudeShield *) user;
-    mySelf->_callbackGPIO(gpio, level, tick);
+    mySelf->_callbackGPIO(pi, gpio, level, tick);
 }
 
 void DudeShield::init_gpio(bool pFlag)
 {
-    if (! m_GPIO_ON) return;
+    if (! ui->cbGPIOON->isChecked()) return;
     if (pFlag)
     {
-        if (gpioInitialise() < 0)
+        if (m_pigpiod_session = pigpio_start(nullptr,nullptr) < 0)
         {
             qWarning() << tr("pigpio initialisation failed : are you sure you have launched this app as root?");
         }
@@ -2110,18 +2119,26 @@ void DudeShield::init_gpio(bool pFlag)
         {
             qDebug() << "pigpio initialised ok";
             //Set PTT Pin
-            gpioSetMode(m_PTT_PIN, PI_INPUT);
-            gpioSetPullUpDown(m_PTT_PIN, PI_PUD_OFF);
-            gpioSetAlertFuncEx(m_PTT_PIN, _callbackGPIOExt, (void *)this);
+            m_PTT_PIN = ui->cbPTTPin->currentData().toInt();
+            m_TX_LED_PIN = ui->cbTXLEDPin->currentData().toInt();
+            m_RX_LED_PIN = ui->cbRXLEDPin->currentData().toInt();
+            set_mode(m_pigpiod_session, m_PTT_PIN, PI_INPUT);
+            set_pull_up_down(m_pigpiod_session, m_PTT_PIN, PI_PUD_OFF);
+            callback_ex( m_pigpiod_session,m_PTT_PIN, 1, (CBFuncEx_t)_callbackGPIOExt, (void *)this);
+            callback_ex( m_pigpiod_session,m_PTT_PIN, 0, (CBFuncEx_t)_callbackGPIOExt, (void *)this);
             //Set TX LED Pin
-            gpioSetMode(m_TX_LED_PIN, PI_OUTPUT);
+            set_mode(m_pigpiod_session,m_TX_LED_PIN, PI_OUTPUT);
+            gpio_write(m_pigpiod_session,m_TX_LED_PIN,0);
             //Set RX LED Pin
-            gpioSetMode(m_RX_LED_PIN, PI_OUTPUT);
+            set_mode(m_pigpiod_session,m_RX_LED_PIN, PI_OUTPUT);
+            gpio_write(m_pigpiod_session,m_RX_LED_PIN,0);
         }
     }
     else
     {
-        gpioTerminate();
+        gpio_write(m_pigpiod_session,m_TX_LED_PIN,0);
+        gpio_write(m_pigpiod_session,m_RX_LED_PIN,0);
+        pigpio_stop(m_pigpiod_session);
     }
 }
 #endif
@@ -2297,6 +2314,22 @@ void DudeShield::process_settings()
     ui->editIAXPort->setText(m_settings.value("IAXPORT","").toString());
     m_settings.endGroup();
 
+#ifdef Q_OS_RPI
+    m_settings.beginGroup("gpio");
+    ui->cbGPIOON->setChecked(m_settings.value("GPIO_ON",true).toBool());
+    QString Pin = m_GPIO_PINs.key(m_settings.value("PTT_PIN",18).toInt());
+    i = ui->cbPTTPin->findText(Pin);
+    ui->cbPTTPin->setCurrentIndex(i);
+
+    Pin = m_GPIO_PINs.key(m_settings.value("TX_LED_PIN",19).toInt());
+    i = ui->cbTXLEDPin->findText(Pin);
+    ui->cbTXLEDPin->setCurrentIndex(i);
+
+    Pin = m_GPIO_PINs.key(m_settings.value("RX_LED_PIN",20).toInt());
+    i = ui->cbRXLEDPin->findText(Pin);
+    ui->cbRXLEDPin->setCurrentIndex(i);
+    m_settings.endGroup();
+#endif
     ui->comboHost->blockSignals(false);
     ui->comboMode->blockSignals(false);
 }
@@ -2388,9 +2421,10 @@ void DudeShield::closeEvent(QCloseEvent*)
 
 #ifdef Q_OS_RPI
     m_settings.beginGroup("gpio");
-    m_settings.setValue("PTT_PIN",m_PTT_PIN);
-    m_settings.setValue("TX_LED_PIN",m_TX_LED_PIN);
-    m_settings.setValue("RX_LED_PIN",m_RX_LED_PIN);
+    m_settings.setValue("GPIO_ON",ui->cbGPIOON->isChecked());
+    m_settings.setValue("PTT_PIN",ui->cbPTTPin->currentData().toInt());
+    m_settings.setValue("TX_LED_PIN",ui->cbTXLEDPin->currentData().toInt());
+    m_settings.setValue("RX_LED_PIN",ui->cbRXLEDPin->currentData().toInt());
     m_settings.endGroup();
 #endif
 }
@@ -2474,5 +2508,20 @@ void DudeShield::saveLog()
             QTextStream writer (&document);
             writer << Doc->toHtml();
         }
+    }
+}
+
+void DudeShield::on_cbGPIOON_stateChanged(int arg1)
+{
+    if (ui->cbGPIOON->isChecked())
+    {
+        ui->cbPTTPin->setEnabled(true);
+        ui->cbTXLEDPin->setEnabled(true);
+        ui->cbRXLEDPin->setEnabled(true);
+    }
+    else {
+        ui->cbPTTPin->setEnabled(false);
+        ui->cbTXLEDPin->setEnabled(false);
+        ui->cbRXLEDPin->setEnabled(false);
     }
 }

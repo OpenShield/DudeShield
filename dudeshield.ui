@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabMain">
        <property name="sizePolicy">
@@ -957,7 +957,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="4" column="1">
-            <widget class="QComboBox" name="cbRXLEDPIN">
+            <widget class="QComboBox" name="cbRXLEDPin">
              <property name="enabled">
               <bool>false</bool>
              </property>

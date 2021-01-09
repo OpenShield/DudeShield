@@ -62,7 +62,7 @@ unix:!macx {
         message(Model = $$RPIVERSION)
         DEFINES+= Q_OS_RPI
         DEFINES+= RPI_VERSION=\\\"$${RPIVERSION}\\\"
-        LIBS += -lpigpio
+        LIBS += -lpigpiod_if2 -lrt
     }
 }
 
