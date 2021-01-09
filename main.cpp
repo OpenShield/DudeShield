@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     QDir::setCurrent(a.applicationDirPath());
     QTranslator Trans;
 #ifdef Q_OS_LINUX
-    Trans.load(QLocale(),"/usr/share/dudeshield/translations/" + QString(APP_NAME) + "_" + locale +".qm",QLatin1String("_"), QLatin1String(":/i18n"));
+    Trans.load("/usr/share/dudeshield/translations/" + QString(APP_NAME) + "_" + locale +".qm");
 #else
 #ifdef Q_OS_MACOS
     Trans.load("../Resources/" + QString(APP_NAME) + "_" + locale +".qm");

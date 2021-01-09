@@ -2087,7 +2087,7 @@ bool DudeShield::event(QEvent * event) // overloading event(QEvent*) method of Q
 
 void DudeShield::_callbackGPIO(int pi, unsigned int gpio,unsigned int level, uint32_t tick)
 {
-    qWarning()<< tr("GPIO Change  occured : Pin ") << QString::number(gpio) << tr("=") << QString::number(level) << tr(" at ") << QString::number(tick);
+    m_log->log("GPIO Change occured : Pin " + QString::number(gpio) + "=" + QString::number(level) + " at " + QString::number(tick),Qt::magenta,LEVEL_NORMAL);
     // PTT Push Button
     if (gpio == m_PTT_PIN)
     {
@@ -2128,7 +2128,7 @@ void DudeShield::init_gpio(bool pFlag)
     {
         if (m_pigpiod_session = pigpio_start(nullptr,nullptr) < 0)
         {
-            qWarning() << tr("pigpio initialisation failed : are you sure you have launched this app as root?");
+            qWarning() << tr("pigpiod client initialisation failed : are you sure to have enable and start the pigpiod daemon on your RaspBerry PI?");
         }
         else
         {

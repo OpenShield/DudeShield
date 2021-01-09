@@ -325,19 +325,19 @@ win32 {
 #linux make install
 unix:!macx {
     PREFIX = /usr
-    Binary.path = $${PREFIX}/bin
-    Binary.files = $$OUT_PWD/$${TARGET}
+    Binary.path = $$PREFIX/bin
+    Binary.files = $$OUT_PWD/$$TARGET
     INSTALLS += Binary
 
-    Translation.path = $${PREFIX}/share/$${TARGET}/translations
+    Translation.path = $$PREFIX/share/$$TARGET/translations
     Translation.files = $$PWD/translations/*.qm
     INSTALLS += Translation
 
-    Icons.path = $${PREFIX}/share/icons/hicolor/72x72/apps
+    Icons.path = $$PREFIX/share/icons/hicolor/72x72/apps
     Icons.files = $$PWD/images/dudeshield.png
     INSTALLS += Icons
 
-    Shortcut.path = $${PREFIX}/share/applications
+    Shortcut.path = $$PREFIX/share/applications
     Shortcut.files = $$PWD/*.desktop
     INSTALLS += Shortcut
 }
