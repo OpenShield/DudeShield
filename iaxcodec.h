@@ -110,6 +110,7 @@ private:
         QString m_ttstext;
         uint16_t m_ttscnt;
         int m_cnt;
+        qreal m_rxgain;
 #ifdef USE_FLITE
         cst_voice *voice_slt;
         cst_voice *voice_kal;

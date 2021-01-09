@@ -12,14 +12,14 @@ I added Flite TTS TX capability to DUDE-Star so I didn't have to talk to myself 
 M17 support is preliminary and is a work in progress, as is the M17 protocol itself. The Codec2 library included in DUDE-Star is a C++ implementation of the original C library taken from the mvoice project.  More info on M17 can be found here: https://m17project.org/
 
 # Usage
-On first launch, DUDE-Star will attempt to download the DMR ID list and host files for all modes except IAX.  IAX node info is manually entered in the settings tab under 'IAX Settings'.
+On first launch, DUDE-Star will attempt to download the host files and ID files.  IAX has no host file, node info is manually entered in the settings tab under 'IAX Settings'.
 
 Host/Mod: Select the desired host and module (for D-STAR and M17) from the selections.
 
 Callsign:  Enter your amateur radio callsign.  A valid license is required to use this software.  
 
 DMRID: A valid DMR ID is required to connect to DMR servers.
-Latitude/Logitude/Location/Description:  These are DMR config options, sent to the DMR server during connect.   Some servers require specific values here, some do not.  This is specific to the server you are connecting to, so please dont ask what these values should be.
+Latitude/Longitude/Location/Description:  These are DMR config options, sent to the DMR server during connect.   Some servers require specific values here, some do not.  This is specific to the server you are connecting to, so please dont ask what these values should be.
 
 DMR+ IPSC2 hosts:  The format for the DMR+ options string is the complete string including 'Options='.  Create your options string and check 'Send DMR+ options on connect' before connecting.  A description of the DMR+ options string can be found here: https://github.com/g4klx/MMDVMHost/blob/master/DMRplus_startup_options.md .
 

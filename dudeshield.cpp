@@ -25,6 +25,10 @@
 #include <iostream>
 #include <time.h>
 
+#ifdef Q_OS_MACOS
+#include "micpermission.h"
+#endif
+
 #include "audioengine.h"
 #include "serialambe.h"
 #include "ui_dudeshield.h"
@@ -346,12 +350,13 @@ void DudeShield::download_file(QString f)
     connect(httpThread, SIGNAL(started()), http, SLOT(process()));
     connect(http, SIGNAL(file_downloaded(QString)), this, SLOT(file_downloaded(QString)));
     connect(httpThread, SIGNAL(finished()), http, SLOT(deleteLater()));
+    m_log->log(tr("Downloading ") + f + " ...");
     httpThread->start();
 }
 
 void DudeShield::file_downloaded(QString filename)
 {
-    m_log->log("DudeShield::file_downloaded()" + filename,Qt::magenta,LEVEL_NORMAL);
+    m_log->log(tr("Downloaded ") + filename);
     QString m = ui->comboMode->currentText();
     {
         if(filename == "dplus.txt" && m == "REF"){
@@ -1158,8 +1163,10 @@ void DudeShield::process_dmr_ids()
                     continue;
                 }
                 QStringList ll = l.simplified().split(' ');
-                //qDebug() << ll.at(0).simplified() << " " <<  ll.at(2) + ":" + ll.at(4);
-                m_dmrids[ll.at(0).toUInt()] = ll.at(1);
+                if(ll.size() > 1){
+                    //qDebug() << ll.at(0).simplified() << " " <<  ll.at(2) + ":" + ll.at(4);
+                    m_dmrids[ll.at(0).toUInt()] = ll.at(1);
+                }
             }
         }
         f.close();
@@ -1177,6 +1184,7 @@ void DudeShield::update_dmr_ids()
         f.remove();
     }
     process_dmr_ids();
+    update_nxdn_ids();
 }
 
 void DudeShield::process_nxdn_ids()
@@ -1211,7 +1219,7 @@ void DudeShield::update_nxdn_ids()
         QFile f(config_path + "/NXDN.csv");
         f.remove();
     }
-    process_dmr_ids();
+    process_nxdn_ids();
 }
 
 void DudeShield::discover_vocoders()
@@ -1230,6 +1238,7 @@ void DudeShield::process_connect()
     //fprintf(stderr, "process_connect() called connect_status == %d\n", connect_status);fflush(stderr);
     if(connect_status != DISCONNECTED){
         connect_status = DISCONNECTED;
+        m_log->log(tr("Disconnected"));
         //m_uitimer->stop();
         //m_levelmeter->setLevel(0);
         m_outlevel = 0;
@@ -1278,6 +1287,11 @@ void DudeShield::process_connect()
         QMessageBox::warning(this, tr("Select host"), tr("No host selected"));
     }
     else{
+#ifdef Q_OS_MACOS
+        int r = MicPermission::check_permission();
+        fprintf(stderr, "check_permission() returned %d\n", r);
+        ui->textLog->append("check_permission() returned " + QString::number(r));
+#endif
         connect_status = CONNECTING;
         status_txt->setText("Connecting...");
         //ui->pushConnect->setEnabled(false);
@@ -1296,7 +1310,7 @@ void DudeShield::process_connect()
             host = sl.at(0).simplified();
             port = sl.at(1).toInt();
         }
-
+        m_log->log(tr("Connecting to ") + host + ":" + QString::number(port) + "...");
         if(m_protocol == "REF"){
             m_ref = new REFCodec(callsign, hostname, host, port, ui->comboVocoder->currentData().toString().simplified(), ui->comboCapture->currentText(), ui->comboPlayback->currentText());
             m_modethread = new QThread;
@@ -1475,7 +1489,7 @@ void DudeShield::process_connect()
         if(m_protocol == "NXDN"){
             dmrid = nxdnids.key(callsign);
             dmr_destid = ui->comboHost->currentText().toUInt();
-            m_nxdn = new NXDNCodec(callsign, dmr_destid, host, port, ui->comboVocoder->currentData().toString().simplified(), ui->comboCapture->currentText(), ui->comboPlayback->currentText());
+            m_nxdn = new NXDNCodec(callsign, nxdnids.key(callsign), dmr_destid, host, port, ui->comboVocoder->currentData().toString().simplified(), ui->comboCapture->currentText(), ui->comboPlayback->currentText());
             m_modethread = new QThread;
             m_nxdn->moveToThread(m_modethread);
             connect(m_nxdn, SIGNAL(update()), this, SLOT(update_nxdn_data()));
@@ -1676,6 +1690,7 @@ void DudeShield::update_m17_data()
         ui->checkSWRX->setEnabled(false);
         ui->checkSWTX->setEnabled(false);
         process_codecgain_changed(ui->sliderCodecGain->value());
+        m_log->log(tr("Connected to ") + m_m17->get_host() + ":" + QString::number( m_m17->get_port()));
     }
     status_txt->setText(" Host: " + m_m17->get_host() + ":" + QString::number( m_m17->get_port()) + " Ping: " + QString::number(m_m17->get_cnt()));
     ui->data1->setText(m_m17->get_src());
@@ -1778,9 +1793,9 @@ void DudeShield::update_nxdn_data()
     }
     status_txt->setText(" Host: " + m_nxdn->get_host() + ":" + QString::number( m_nxdn->get_port()) + " Ping: " + QString::number(m_nxdn->get_cnt()));
     if(m_nxdn->get_src()){
-        ui->data1->setText(m_dmrids[m_nxdn->get_src()]);
-        ui->data2->setText(QString::number(m_nxdn->get_src()));
+        ui->data1->setText(nxdnids[m_nxdn->get_src()]);
     }
+    ui->data2->setText(QString::number(m_nxdn->get_src()));
     ui->data3->setText(m_nxdn->get_dst() ? QString::number(m_nxdn->get_dst()) : "");
     if(m_nxdn->get_fn()){
         QString n = QString("%1").arg(m_nxdn->get_fn(), 2, 16, QChar('0'));

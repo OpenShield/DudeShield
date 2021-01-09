@@ -14,7 +14,7 @@
         You should have received a copy of the GNU General Public License
         along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-        These macros are derived from the iaxclient library
+        These macros were derived from the iaxclient library
         https://www.voip-info.org/iaxclient/
 */
 

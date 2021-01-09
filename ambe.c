@@ -22,6 +22,10 @@
 //#include "ambe3600x2250_const.h"
 //#include "ambe3600x2400_const.h"
 
+#ifdef AMBE_DEBUG
+#include <stdio.h>
+#endif
+
 extern const double AmbePlusLtable[];
 extern const int AmbePlusVuv[16][8];
 extern const int AmbePlusLmprbl[57][4];
@@ -159,7 +163,7 @@ mbe_dequantizeAmbeParms (mbe_parms * cur_mp, mbe_parms * prev_mp, const int *b, 
 #endif
     }
 #ifdef QT_DEBUG
-  fprintf (atderr, "\nb0:%i w0:%f L:%i b1:%i\n", b0, cur_mp->w0, L, b1);
+  fprintf (stderr, "\nb0:%i w0:%f L:%i b1:%i\n", b0, cur_mp->w0, L, b1);
 #endif
   if (dstar) {
     deltaGamma = AmbePlusDg[b2];

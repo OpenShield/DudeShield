@@ -81,11 +81,12 @@ win32 {
 
 macx {
     # Mac Specific
-    # Compatibility down to OS X 10.10
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
+    # Compatibility down to OS X 10.14
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
+    QMAKE_INFO_PLIST = Info.plist
     QT_CONFIG -= no-pkg-config
 
-    LIBS += -framework CoreFoundation
+    LIBS += -framework AVFoundation
     isEmpty(GIT_PATH) : GIT_PATH=git
 }
 
@@ -181,7 +182,8 @@ SOURCES += \
 
 macx {
 SOURCES += \
-    tools/keepalive.mm
+    tools/keepalive.mm \
+    micpermission.mm
 }
 
 HEADERS += \
@@ -265,7 +267,8 @@ HEADERS += \
 
 macx {
 HEADERS += \
-    tools/keepalive.h
+    tools/keepalive.h \
+    micpermission.h
 }
 
 FORMS += \
@@ -445,5 +448,6 @@ QMAKE_EXTRA_TARGETS += deploy copydata all
 
 DISTFILES += \
     gpl-2.0.md \
-    onrpi
+    onrpi \
+    Info.plist
 
