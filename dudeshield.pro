@@ -300,10 +300,6 @@ win32 {
 
 # =====================================================================
 # Local deployment commands for development
-unix:!macx {
-    copydata.commands += mkdir -p $$OUT_PWD/translations &&
-    copydata.commands += cp -avfu $$PWD/translations/*.qm $$OUT_PWD/translations
-}
 
 # Mac OS X - Copy help and Marble plugins and data
 macx {
@@ -327,20 +323,20 @@ win32 {
 #linux make install
 unix:!macx {
     PREFIX = /usr
-    Binary.path = $$PREFIX/bin
-    Binary.files = $$OUT_PWD/$${TARGET}
+    Binary.path = $${PREFIX}/bin
+    Binary.files = $${OUT_PWD}/$${TARGET}
     INSTALLS += Binary
 
-    Translation.path = $$PREFIX/share/$$TARGET/translations
-    Translation.files = $$PWD/translations/*.qm
+    Translation.path = $${PREFIX}/share/$${TARGET}/translations
+    Translation.files = $${PWD}/translations/*.qm
     INSTALLS += Translation
 
-    Icons.path = $$PREFIX/share/icons/hicolor/72x72/apps
-    Icons.files = $$PWD/images/dudeshield_72x72px.png
+    Icons.path = $${PREFIX}/share/icons/hicolor/72x72/apps
+    Icons.files = $${PWD}/images/dudeshield_72x72px.png
     INSTALLS += Icons
 
-    Shortcut.path = $$PREFIX/share/applications
-    Shortcut.files = $$PWD/*.desktop
+    Shortcut.path = $${PREFIX}/share/applications
+    Shortcut.files = $${PWD}/*.desktop
     INSTALLS += Shortcut
 }
 
