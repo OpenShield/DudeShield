@@ -97,11 +97,13 @@ message(-----------------------------------)
 message(VERSION_MAJOR: $$VERSION_MAJOR)
 message(VERSION_MINOR: $$VERSION_MINOR)
 message(VERSION_BUILD: $$VERSION_BUILD)
-message(DEPLOY_BASE: $$DEPLOY_BASE)
 message(DEFINES: $$DEFINES)
 message(INCLUDEPATH: $$INCLUDEPATH)
-message(LIBS: $$LIBS)
-message(TARGET_NAME: $$TARGET_NAME)
+message(LIBS: $${LIBS})
+message(TARGET_NAME: $${TARGET})
+message(BASE_DIR: $${PWD})
+message(BUILD_DIR: $${OUT_PWD})
+message(DEPLOY_BASE: $$DEPLOY_BASE)
 message(QT_INSTALL_PREFIX: $$[QT_INSTALL_PREFIX])
 message(QT_INSTALL_LIBS: $$[QT_INSTALL_LIBS])
 message(QT_INSTALL_PLUGINS: $$[QT_INSTALL_PLUGINS])
@@ -326,7 +328,7 @@ win32 {
 unix:!macx {
     PREFIX = /usr
     Binary.path = $$PREFIX/bin
-    Binary.files = $$OUT_PWD/$$TARGET
+    Binary.files = $$OUT_PWD/$${TARGET}
     INSTALLS += Binary
 
     Translation.path = $$PREFIX/share/$$TARGET/translations
