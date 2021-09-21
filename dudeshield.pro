@@ -10,7 +10,7 @@ isEmpty(GIT_VERSION) {
 # Application Version
   VERSION_MAJOR = 1
   VERSION_MINOR = 0
-  VERSION_BUILD = 1
+  VERSION_BUILD = 2
 } else {
   VERSIONS = $$split(GIT_VERSION, ".")
   VERSION_MAJOR = $$member(VERSIONS, 0)
