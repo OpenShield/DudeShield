@@ -1,5 +1,8 @@
-# DUDE-Star
+# DUDE-Shield
 Software to RX/TX D-STAR, DMR, Fusion YSF/FCS, NXDN, P25, M17, and IAX (AllStar client) over UDP
+
+This software is a fork based on initial porject named DUDE-Star, available on github : 
+https://github.com/nostar/dudestar
 
 This software connects to D-STAR, Fusion, NXDN, P25, M17 reflectors and AllStar nodes (as an IAX2 client) over UDP.  It is compatible with all of the AMBE3000 based USB devices out there (ThumbDV, DVstick 30, DVSI, etc). It includes software decoding and encoding support, using experimental open source IMBE/AMBE vocoder software.  This software is open source and uses the cross platform C++ library called Qt.  It will build and run on Linux, Windows, and Mac OSX.
 
@@ -42,11 +45,31 @@ Port: UDP port of node, usually 4569.
 
 Add DTMF commands like \*3node, \*1node, \*70, etc in the IAX DTMF box and hit send to send the DTMF string.  The asterisk (*) character is already added on the Droidstar app, so only input the numeric portion of the command (70 instead of *70, etc). Details on various commands can be found at the AllStar wiki and others.
 
+# Compiling on Windows
+The best way to build Dude Shield on windows is to install in order :
+- Microsoft Visual Studio Community Edition
+  https://visualstudio.microsoft.com/fr/
+
+- QT Installer
+  https://www.qt.io/download-qt-installer
+
+Once each software are installed, you can open DudeShield Project with QtCreator and build the solution
+
+Release are also available on github with a 64bit installer for windows.
+
+# Compiling on MacOS
+
+you need before Xcode from Apple Store to be able build binaries. 
+Then QT Installer https://www.qt.io/download-qt-installer
+
 # Compiling on Linux
-This software is written in C++ on Linux and requires mbelib and QT5, and natually the devel packages to build.  With these requirements met, run the following:
+This software is written in C++ on Linux and requires QT5, and natually the devel packages to build.  With these requirements met, run the following:
 ```
-qmake
+mkdir build
+cd build
+qmake ..
 make
+sudo make install
 ```
 qmake may have a different name on your distribution i.e. on Fedora it's called qmake-qt5
 
@@ -57,6 +80,22 @@ sudo apt-get install libqt5multimedia5-plugins libqt5serialport5-dev qtmultimedi
 And if pulseaudio is not currently installed:
 ```
 sudo apt-get install pulseaudio
+```
+# Compiling on Rasperry (Raspbian) with GPIO support
+
+Install and prepare dependencies:
+```
+sudo apt-get install libqt5multimedia5-plugins libqt5serialport5-dev qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5 libpigpio-if-dev pigpiod piggpio-tools
+
+sudo systemctl enable pigpiod
+sudo systelctl start pigpiod
+```
+Then in git repository :
+```
+mkdir build
+cd build
+qmake ..
+sudo make install
 ```
 
 # Builds

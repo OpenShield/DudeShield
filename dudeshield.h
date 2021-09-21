@@ -24,6 +24,7 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QSettings>
+#include <QPushButton>
 #ifdef USE_FLITE
 #include <flite/flite.h>
 #endif
@@ -138,6 +139,8 @@ static void _callbackGPIOExt(int pi, unsigned int gpio,unsigned int level, uint3
     bool hwtx;
     bool hwrx;
     bool hw_ambe_present;
+    bool m_tx_holding;
+    bool m_tx_hold_mem;
     QMap<uint32_t, QString> m_dmrids;
     QMap<uint16_t, QString> nxdnids;
     const unsigned char header[5] = {0x80,0x44,0x53,0x56,0x54}; //DVSI packet header
@@ -220,9 +223,14 @@ private slots:
 
     void on_cbGPIOON_stateChanged(int arg1);
 
+    void on_pressTXButton();
+    void on_releaseTXButton();
+    void on_holdingButton();
+
 signals:
     void on_startTX();
     void on_stopTX();
+    void on_holdTX(QPushButton*);
 
 };
 

@@ -413,6 +413,7 @@ void DMRCodec::stop_tx()
     m_tx = false;
 }
 
+
 void DMRCodec::transmit()
 {
     uint8_t ambe[72];

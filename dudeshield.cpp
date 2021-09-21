@@ -58,6 +58,8 @@ DudeShield::DudeShield(QWidget *parent) :
     m_dmrcc(1),
     m_dmrslot(2),
     m_dmrcalltype(0),
+    m_tx_holding(0),
+    m_tx_hold_mem(0),
     m_outlevel(0),
     m_rxcnt(0)
 {
@@ -160,7 +162,10 @@ void DudeShield::init_gui()
     ui->editTTSTXT->hide();
 #endif
     ui->pushTX->setAutoFillBackground(true);
-    ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); } QPushButton:pressed { background-color: rgb(180, 0, 0); color: rgb(0,0,0); }");
+    ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
+    ui->pushTX->update();
+    ui->pushHold->setAutoFillBackground(true);
+    ui->pushHold->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
     ui->pushTX->update();
     ui->radioMic->setChecked(true);
     ui->sliderCodecGain->setRange(100, 800);
@@ -170,8 +175,9 @@ void DudeShield::init_gui()
     ui->sliderMic->setRange(0, 100);
     ui->sliderMic->setValue(100);
     ui->pushTX->setDisabled(true);
-    connect(ui->pushTX, SIGNAL(pressed()), this, SIGNAL(on_startTX()));
-    connect(ui->pushTX, SIGNAL(released()), this, SIGNAL(on_stopTX()));
+    connect(ui->pushTX, SIGNAL(pressed()), this, SLOT(on_pressTXButton()));
+    connect(ui->pushTX, SIGNAL(released()), this, SLOT(on_releaseTXButton()));
+    connect(ui->pushHold, SIGNAL(released()), this, SLOT(on_holdingButton()));
     m17rates = new QButtonGroup();
     m17rates->addButton(ui->radioButtonM173200, 1);
     m17rates->addButton(ui->radioButtonM171600, 0);
@@ -2526,7 +2532,7 @@ void DudeShield::saveLog()
     }
 }
 
-void DudeShield::on_cbGPIOON_stateChanged(int arg1)
+void DudeShield::on_cbGPIOON_stateChanged(int)
 {
     if (ui->cbGPIOON->isChecked())
     {
@@ -2538,5 +2544,68 @@ void DudeShield::on_cbGPIOON_stateChanged(int arg1)
         ui->cbPTTPin->setEnabled(false);
         ui->cbTXLEDPin->setEnabled(false);
         ui->cbRXLEDPin->setEnabled(false);
+    }
+}
+
+void DudeShield::on_pressTXButton()
+{
+    m_log->log(tr("TX button pressed"),Qt::magenta,LEVEL_NORMAL);
+    if (m_tx_holding)
+    {
+        if (m_tx_hold_mem)
+        {
+            m_tx_holding =false;
+            m_tx_hold_mem =false;
+            ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
+            ui->pushTX->update();
+            ui->pushHold->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
+            ui->pushHold->update();
+            emit(on_stopTX());
+        }
+        if (!m_tx_hold_mem)
+        {
+            m_tx_hold_mem=true;
+            ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(180, 0, 0); color: rgb(0,0,0); }");
+            ui->pushTX->update();
+            emit(on_startTX());
+        }
+    }
+    else
+    {
+        ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(180, 0, 0); color: rgb(0,0,0); }");
+        ui->pushTX->update();
+        emit(on_startTX());
+    }
+}
+
+void DudeShield::on_releaseTXButton()
+{
+    m_log->log(tr("TX button released"),Qt::magenta,LEVEL_NORMAL);
+    if (!m_tx_holding)
+    {
+        ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
+        ui->pushTX->update();
+        emit(on_stopTX());
+    }
+}
+
+void DudeShield::on_holdingButton()
+{
+    m_log->log(tr("Holding button pressed"),Qt::magenta,LEVEL_NORMAL);
+    if (!m_tx_holding)
+    {
+        m_tx_holding=true;
+        ui->pushHold->setStyleSheet("QPushButton:enabled { background-color: rgb(180, 0, 0); color: rgb(0,0,0); }");
+        ui->pushHold->update();
+    }
+    else
+    {
+        m_tx_holding=false;
+        m_tx_hold_mem=false;
+        ui->pushHold->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
+        ui->pushHold->update();
+        ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); }");
+        ui->pushTX->update();
+        emit(on_stopTX());
     }
 }

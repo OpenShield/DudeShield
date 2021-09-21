@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include <QPushButton>
 #include "audioengine.h"
 #include "serialambe.h"
 #include "mbedec.h"
@@ -123,7 +124,6 @@ private:
 	uint8_t m_ambe[27];
 	QQueue<char> m_rxambeq;
 	QQueue<char> m_ambeq;
-
 #ifdef USE_FLITE
 	cst_voice *voice_slt;
 	cst_voice *voice_kal;
