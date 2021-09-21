@@ -1,4 +1,4 @@
-# DUDE-Shield
+# DUDE-Shield version 1.3
 Software to RX/TX D-STAR, DMR, Fusion YSF/FCS, NXDN, P25, M17, and IAX (AllStar client) over UDP
 
 This software is a fork based on initial porject named DUDE-Star, available on github : 
