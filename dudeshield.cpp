@@ -2562,7 +2562,7 @@ void DudeShield::on_pressTXButton()
             ui->pushHold->update();
             emit(on_stopTX());
         }
-        if (!m_tx_hold_mem)
+        else
         {
             m_tx_hold_mem=true;
             ui->pushTX->setStyleSheet("QPushButton:enabled { background-color: rgb(180, 0, 0); color: rgb(0,0,0); }");
